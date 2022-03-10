@@ -2,7 +2,7 @@
 """
 Created on Fri Jul 23 14:39:59 2021
 
-@author: Cryss
+@author: Chris
 """
 
 import requests
