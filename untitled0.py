@@ -31,6 +31,26 @@ def removeAverage(data,davg):
         for j in range(len(data)):
             if data[j,0].hour == i:
                 data[j,1] -= davg[i]
+                
+def interpData(data):
+    from scipy.interpolate import interp1d
+    hold = data[:,0]
+    for i in range(len(data)):     
+        # print(seattle[i,0].timestamp() - seattle[i-1,0].timestamp())
+        hold[i] = (hold[i].timestamp())
+
+    f = interp1d(hold,data[:,1])
+
+    x = arange(hold[0],hold[-1],3600)
+    y = f(x)
+
+
+    new = []
+    for i in range(len(x)):
+        new.append(datetime.fromtimestamp(x[i]))
+
+    return new, y
+    
 
 files = os.listdir()
 files.sort()
@@ -64,7 +84,6 @@ chehalis = convert_data(chehalis)
 #         print(seattle[i,0])
 #         print('\n')
 
-
 from scipy.fft import fft
 from scipy.interpolate import interp1d
 
@@ -77,22 +96,4 @@ from scipy.interpolate import interp1d
 
     
     
-def interpData(data):
-    from scipy.interpolate import interp1d
-    hold = data[:,0]
-    for i in range(len(data)):     
-        # print(seattle[i,0].timestamp() - seattle[i-1,0].timestamp())
-        hold[i] = (hold[i].timestamp())
 
-    f = interp1d(hold,data[:,1])
-
-    x = arange(hold[0],hold[-1],3600)
-    y = f(x)
-
-
-    new = []
-    for i in range(len(x)):
-        new.append(datetime.fromtimestamp(x[i]))
-
-    return new, y
-    
